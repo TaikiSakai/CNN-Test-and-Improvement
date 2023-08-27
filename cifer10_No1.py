@@ -15,7 +15,7 @@ class MyModel:
         self.Conv2D_3 = layers.Conv2D(128, (3, 3), activation='relu', padding='same')
         self.Conv2D_4 = layers.Conv2D(128, (3, 3), activation='relu', padding='same')
         self.Conv2D_5 = layers.Conv2D(64, (3, 3), activation='relu', padding='same')
-        self.Conv2D_6 = layers.Conv2D(32, (3, 3), activation='relu', padding='same')
+        self.Conv2D_6 = layers.Conv2D(64, (3, 3), activation='relu', padding='same')
         self.Conv2D_7 = layers.Conv2D(64, (3, 3), activation='relu', padding='same')
         self.pooling_1 = layers.MaxPooling2D((2, 2))
         self.pooling_2 = layers.MaxPooling2D((2, 2))
@@ -42,9 +42,6 @@ class MyModel:
         model.add(self.Conv2D_4)
         model.add(self.pooling_4)
         model.add(self.Conv2D_5)
-        model.add(self.pooling_5)
-        model.add(self.Conv2D_6)
-        model.add(self.pooling_6)
         model.add(self.dropout_1)
         model.add(self.flatten)
         model.add(self.dropout_2)
@@ -57,6 +54,8 @@ class MyModel:
                       loss=keras.losses.SparseCategoricalCrossentropy(from_logits=False), 
                       metrics=['accuracy'])
         
+        return model
+    
 
 def main(preview=True):
 
@@ -80,7 +79,7 @@ def main(preview=True):
     model = MyModel().model_create()
 
     history = model.fit(train_images, train_labels, epochs=10,
-                        validattion_data=(test_images, test_labels))
+                        validation_data=(test_images, test_labels))
 
     plt.plot(history.history['accuracy'], label='accuracy')
     plt.plot(history.history['val_accuracy'], label = 'val_accuracy')
@@ -94,4 +93,5 @@ def main(preview=True):
     print(test_loss)
 
 if __name__ == '__main__':
-    main(preview=False)
+    main(preview=True)
+
